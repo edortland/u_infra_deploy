@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "EnvironmentPrefix": {
+      "type": "string",
+      "allowedValues": [
+        "usgt",
+        "usgx",
+        "usgp",
+        "usgd"
+      ],
+      "metadata": {
+        "description": "The prefix of the environment you are deploying"
+      }
+    }
+  },
+  "variables": {
+    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'VMData')]",
+    "storageAccountType" :  "Standard_LRS"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('MainVmStorageAccount')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    }
+  ],
+    "outputs": {
+    }
+}

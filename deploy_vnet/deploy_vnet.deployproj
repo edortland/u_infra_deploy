@@ -39,6 +39,7 @@
     <None Include="Templates\main_deploy.parameters.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Templates\VMStorageAccount.json" />
     <None Include="Tools\AzCopy.exe" />
     <None Include="Tools\Microsoft.Data.Edm.dll">
       <Visible>False</Visible>
@@ -57,4 +58,9 @@
     </None>
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

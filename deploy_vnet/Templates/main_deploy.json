@@ -23,7 +23,8 @@
     }
   },
   "variables": {
-    "vnetTemplateUri" :  "[concat(parameters('SourceLocation'),'/vnet.json')]"
+    "vnetTemplateUri": "[concat(parameters('SourceLocation'),'/vnet.json')]",
+    "VMStorageTemplateUri" :  "[concat(parameters('SourceLocation'),'/VMStorageAccount.json')]"
   },
   "resources": [
     {
@@ -34,6 +35,23 @@
         "mode": "Incremental",
         "templateLink": {
           "uri": "[variables('vnetTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "VMStorage",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMStorageTemplateUri')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
