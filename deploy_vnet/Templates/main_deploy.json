@@ -19,7 +19,7 @@
       "metadata": {
         "description": "The location of resources such as templates and DSC modules that the script is dependent"
       },
-      "defaultValue": "https://raw.githubusercontent.com/edortland/u_infra_deploy/master/deploy_vnet/"
+      "defaultValue": "https://raw.githubusercontent.com/edortland/u_infra_deploy/master/deploy_vnet"
     }
   },
   "variables": {
