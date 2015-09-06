@@ -5,8 +5,8 @@
     "location": {
       "type": "string",
       "allowedValues": [
-        "West Europe",
-        "North Europe"
+        "westeurope",
+        "northeurope"
       ],
       "metadata": {
         "description": "Deployment location"
