@@ -13,10 +13,17 @@
       "metadata": {
         "description": "The prefix of the environment you are deploying"
       }
+    },
+    "SourceLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of resources such as templates and DSC modules that the script is dependent"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/edortland/u_infra_deploy/tree/master/deploy_vnet"
     }
   },
   "variables": {
-    "vnetTemplateUri" :  "/vnet.json"
+    "vnetTemplateUri" :  "[concat(parameters('SourceLocation'),'/templates/vnet.json')]"
   },
   "resources": [
     {
