@@ -21,6 +21,8 @@
     "addressSpace":  "10.0.0.0/8",
     "snetWebDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
     "snetWebDMZ_CIDR": "10.0.1.0/24",
+    "snetGWexch_Name": "[concat(parameters('EnvironmentPrefix'),'_GWexch')]",
+    "snetGWexch_CIDR": "10.0.2.0/24",
     "snetAppDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_AppDMZ')]",
     "snetAppDMZ_CIDR": "10.0.2.0/24", 
     "snetAppTrusted_Name": "[concat(parameters('EnvironmentPrefix'),'_AppTrusted')]",
@@ -48,6 +50,12 @@
             "name": "[variables('snetWebDMZ_Name')]",
             "properties": {
               "addressPrefix": "[variables('snetWebDMZ_CIDR')]"
+            }
+          },
+          {
+            "name": "[variables('snetGWexch_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetGWexch_CIDR')]"
             }
           },
           {
