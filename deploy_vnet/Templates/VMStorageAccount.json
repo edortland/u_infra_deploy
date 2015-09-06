@@ -17,7 +17,7 @@
     }
   },
   "variables": {
-    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'VMData')]",
+    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'VMData')]",
     "storageAccountType" :  "Standard_LRS"
   },
   "resources": [
