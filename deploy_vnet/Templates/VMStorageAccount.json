@@ -14,20 +14,31 @@
       "metadata": {
         "description": "The prefix of the environment you are deploying"
       }
+    },
+    "MainVMStorageAccount": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account to create"
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage"
+      }
     }
+    
   },
   "variables": {
-    "MainVmStorageAccount": "edward34523453",
-    "storageAccountType" :  "Standard_LRS"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('MainVmStorageAccount')]",
+      "name": "[parameters('MainVMStorageAccount')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "properties": {
-        "accountType": "[variables('storageAccountType')]"
+        "accountType": "[parameters('storageAccountType')]"
       }
     }
   ],

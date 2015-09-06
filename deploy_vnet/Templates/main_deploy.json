@@ -2,9 +2,9 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-       "EnvironmentPrefix": {
+    "EnvironmentPrefix": {
       "type": "string",
-       "allowedValues": [
+      "allowedValues": [
         "usgt",
         "usgx",
         "usgp",
@@ -23,8 +23,10 @@
     }
   },
   "variables": {
+    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'VMData')]",
+    "storageAccountType" :  "Standard_LRS",
     "vnetTemplateUri": "[concat(parameters('SourceLocation'),'/vnet.json')]",
-    "VMStorageTemplateUri" :  "[concat(parameters('SourceLocation'),'/VMStorageAccount.json')]"
+    "VMStorageTemplateUri": "[concat(parameters('SourceLocation'),'/VMStorageAccount.json')]"
   },
   "resources": [
     {
@@ -57,6 +59,12 @@
         "parameters": {
           "EnvironmentPrefix": {
             "value": "[parameters('EnvironmentPrefix')]"
+          },
+          "MainVmStorageAccount": {
+            "value": "[variables('MainVmStorageAccount')]"
+          },
+          "storageAccountType": {
+            "value": "[variables('storageAccountType')]"
           }
         }
       }
