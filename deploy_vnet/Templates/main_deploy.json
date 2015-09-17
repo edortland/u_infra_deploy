@@ -14,62 +14,100 @@
         "description": "The prefix of the environment you are deploying"
       }
     },
-    "SourceLocation": {
+    "TemplateLocation": {
       "type": "string",
       "metadata": {
-        "description": "The location of resources such as templates and DSC modules that the script is dependent"
-      },
-      "defaultValue": "https://raw.githubusercontent.com/edortland/u_infra_deploy/master/deploy_vnet/Templates"
-    }
-  },
-  "variables": {
-    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'VMData')]",
-    "storageAccountType" :  "Standard_LRS",
-    "vnetTemplateUri": "[concat(parameters('SourceLocation'),'/vnet.json')]",
-    "VMStorageTemplateUri": "[concat(parameters('SourceLocation'),'/VMStorageAccount.json')]"
-  },
-  "resources": [
-    {
-      "name": "VNet",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('vnetTemplateUri')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "EnvironmentPrefix": {
-            "value": "[parameters('EnvironmentPrefix')]"
-          }
-        }
+        "description": "The location of all the templates that are nested"
       }
     },
-    {
-      "name": "VMStorage",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('VMStorageTemplateUri')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "EnvironmentPrefix": {
-            "value": "[parameters('EnvironmentPrefix')]"
+    "scriptLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of all the scripts that are used in the templates"
+      }
+    },
+    "imagePublisher": {
+      "type": "string",
+      "metadata": {
+        "description": "Publisher of the image used to create a VM"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "metadata": {
+        "description": "Type of image offer used to create a VM"
+      }
+    },
+    "imageSKU": {
+      "type": "string",
+      "metadata": {
+        "description": "Version of the image to create the VM"
+      }
+    },
+    "DomainName": {
+      "type": "string",
+      "metadata": {
+        "description": "fqdn of the domain that you want deployed"
+      }
+    },
+    "DNSServerAddresses": {
+      "type": "array",
+      "metadata": {
+        "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
+      }
+    }
+  },
+    "variables": {
+      "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdata')]",
+      "storageAccountType": "Standard_LRS",
+      "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
+      "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]"
+    },
+    "resources": [
+      {
+        "name": "VNet",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('vnetTemplateUri')]",
+            "contentVersion": "1.0.0.0"
           },
-          "MainVmStorageAccount": {
-            "value": "[variables('MainVmStorageAccount')]"
+          "parameters": {
+            "EnvironmentPrefix": {
+              "value": "[parameters('EnvironmentPrefix')]"
+            },
+            "DNSServerAddresses": {
+              "value": "[parameters('DNSServerAddresses')]"
+            }
+          
+        }
+      },
+      {
+        "name": "VMStorage",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('VMStorageTemplateUri')]",
+            "contentVersion": "1.0.0.0"
           },
-          "storageAccountType": {
-            "value": "[variables('storageAccountType')]"
+          "parameters": {
+            "EnvironmentPrefix": {
+              "value": "[parameters('EnvironmentPrefix')]"
+            },
+            "MainVmStorageAccount": {
+              "value": "[variables('MainVmStorageAccount')]"
+            },
+            "storageAccountType": {
+              "value": "[variables('storageAccountType')]"
+            }
           }
         }
       }
-    }
-  ],
+    ],
     "outputs": {
     }
-}
+  }
