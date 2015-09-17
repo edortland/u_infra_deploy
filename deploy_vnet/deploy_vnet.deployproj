@@ -25,7 +25,6 @@
   <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
   <!-- vertag<:>end -->
   <ItemGroup>
-    <Folder Include="Scripts\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
@@ -34,6 +33,8 @@
     </None>
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\vnet.json" />
+    <None Include="Scripts\CreateADBDC.ps1.zip" />
+    <None Include="Scripts\CreateADPDC.ps1.zip" />
     <None Include="Templates\domaincontrollers.json" />
     <None Include="Templates\main_deploy.json" />
     <None Include="Templates\main_deploy.parameters.json" />
