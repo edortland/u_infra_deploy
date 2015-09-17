@@ -34,7 +34,6 @@
     </None>
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
     <Content Include="Templates\vnet.json" />
-    <None Include="DeploymentTemplateFile.json" />
     <None Include="Templates\domaincontrollers.json" />
     <None Include="Templates\main_deploy.json" />
     <None Include="Templates\main_deploy.parameters.json" />

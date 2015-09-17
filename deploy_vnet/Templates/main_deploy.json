@@ -55,59 +55,114 @@
       "metadata": {
         "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
       }
+    },
+    "AdminUsername": {
+      "type": "string",
+      "metadata": {
+        "Description": "username of the default windows administrator account"
+      }
     }
   },
-    "variables": {
-      "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdata')]",
-      "storageAccountType": "Standard_LRS",
-      "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
-      "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]"
-    },
-    "resources": [
-      {
-        "name": "VNet",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('vnetTemplateUri')]",
-            "contentVersion": "1.0.0.0"
+  "variables": {
+    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdata')]",
+    "storageAccountType": "Standard_LRS",
+    "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
+    "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
+    "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
+    "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]"
+  },
+  "resources": [
+    {
+      "name": "VNet",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vnetTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
           },
-          "parameters": {
-            "EnvironmentPrefix": {
-              "value": "[parameters('EnvironmentPrefix')]"
-            },
-            "DNSServerAddresses": {
-              "value": "[parameters('DNSServerAddresses')]"
-            }
-          
-        }
-      },
-      {
-        "name": "VMStorage",
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2015-01-01",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[variables('VMStorageTemplateUri')]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "EnvironmentPrefix": {
-              "value": "[parameters('EnvironmentPrefix')]"
-            },
-            "MainVmStorageAccount": {
-              "value": "[variables('MainVmStorageAccount')]"
-            },
-            "storageAccountType": {
-              "value": "[variables('storageAccountType')]"
-            }
+          "DNSServerAddresses": {
+            "value": "[parameters('DNSServerAddresses')]"
           }
         }
       }
-    ],
+    },
+    {
+      "name": "VMStorage",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMStorageTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+          "MainVmStorageAccount": {
+            "value": "[variables('MainVmStorageAccount')]"
+          },
+          "storageAccountType": {
+            "value": "[variables('storageAccountType')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "DomainControllers",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('DomainControllersTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+          "MainVmStorageAccount": {
+            "value": "[variables('MainVmStorageAccount')]"
+          },
+          "storageAccountType": {
+            "value": "[variables('storageAccountType')]"
+          },
+          "subNet": {
+            "value": "[variables('DomainControllersSubnet')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('adminUserName')]"
+          },
+          "adminPassword": {
+            "value": "1234@#$%abcd"
+          },
+          "imagePublisher": {
+            "value": "[parameters('imagePublisher')]"
+          },
+          "imageOffer": {
+            "value": "[parameters('imageOffer')]"
+          },
+          "imageSKU": {
+            "value": "[parameters('adminUserName')]"
+          },
+          "DomainName": {
+            "value": "[parameters('DomainName')]"
+          },
+          "ScriptLocation": {
+            "value": "[parameters('ScriptLocation')]"
+          }
+        }
+      }
+    }
+  ],
     "outputs": {
     }
   }
