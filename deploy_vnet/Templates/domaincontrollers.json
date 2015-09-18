@@ -186,7 +186,6 @@
       "name": "[variables('dcPDCVMName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts',parameters('MainVmStorageAccount'))]",
         "[resourceId('Microsoft.Network/networkInterfaces',variables('dcPDCNicName'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', variables('dcAvailabilitySetName'))]"
       ],
@@ -269,14 +268,12 @@
         }
       }
     },
-    
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('dcBDCVMName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts',parameters('MainVmStorageAccount'))]",
         "[resourceId('Microsoft.Network/networkInterfaces',variables('dcBDCNicName'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', variables('dcAvailabilitySetName'))]"
         
