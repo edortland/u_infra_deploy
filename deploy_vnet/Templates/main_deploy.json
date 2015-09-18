@@ -132,9 +132,6 @@
           "MainVmStorageAccount": {
             "value": "[variables('MainVmStorageAccount')]"
           },
-          "storageAccountType": {
-            "value": "[variables('storageAccountType')]"
-          },
           "subNet": {
             "value": "[variables('DomainControllersSubnet')]"
           },
