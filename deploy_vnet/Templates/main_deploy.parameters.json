@@ -25,9 +25,6 @@
     },
      "DNSServerAddresses": {
           "value": ["10.1.2.11","10.1.2.12"]
-      },
-     "AdminUsername": {
-          "value": "[concat(parameters('EnvironmentPrefix'),'_admin')"
       }
   }
 }

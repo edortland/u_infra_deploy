@@ -55,12 +55,6 @@
       "metadata": {
         "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
       }
-    },
-    "AdminUsername": {
-      "type": "string",
-      "metadata": {
-        "Description": "username of the default windows administrator account"
-      }
     }
   },
   "variables": {
@@ -138,9 +132,6 @@
           },
           "subNet": {
             "value": "[variables('DomainControllersSubnet')]"
-          },
-          "adminUserName": {
-            "value": "[parameters('adminUserName')]"
           },
           "adminPassword": {
             "value": "1234@#$%abcd"

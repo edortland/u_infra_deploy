@@ -26,12 +26,6 @@
         "description": "Name of the subnet in which the domain controllers need to bee deployed"
       }
     },
-    "adminUserName": {
-      "type": "string",
-      "metadata": {
-        "description": "The password for the Administrator account of the new VM and Domain"
-      }
-    },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
@@ -116,7 +110,8 @@
     "adPDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADPDC.ps1.zip')]",
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "adBDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADBDC.ps1.zip')]",
-    "adBDCConfigurationFunction": "CreateADBDC.ps1\\CreateADBDC"
+    "adBDCConfigurationFunction": "CreateADBDC.ps1\\CreateADBDC",
+    "adminUserName": "[concat(parameters('EnvironmentPrefix'),'_admin')"
   },
   "resources": [
     //Create a availability set
