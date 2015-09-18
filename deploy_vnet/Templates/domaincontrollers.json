@@ -27,7 +27,7 @@
       }
     },
     "adminUserName": {
-      "type": "securestring",
+      "type": "string",
       "metadata": {
         "description": "The password for the Administrator account of the new VM and Domain"
       }
