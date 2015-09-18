@@ -120,7 +120,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-          "[resourceId('Microsoft.Storage/storageAccounts',variables('MainVmStorageAccount'))]"
+          "VMStorage"
         ],
       "properties": {
         "mode": "Incremental",

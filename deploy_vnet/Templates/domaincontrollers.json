@@ -333,8 +333,7 @@
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('dcBDCVMName'))]",
-        "Microsoft.Resources/deployments/UpdateBDCNIC"
+        "[concat('Microsoft.Compute/virtualMachines/', variables('dcBDCVMName'))]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
