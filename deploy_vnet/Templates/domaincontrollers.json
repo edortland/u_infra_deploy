@@ -197,7 +197,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcPDCVMName')]",
-          "adminUsername": "[parameters('AdminUsername')]",
+          "adminUsername": "[variables('AdminUsername')]",
           "adminPassword": "[parameters('AdminPassword')]"
         },
         "storageProfile": {
@@ -255,7 +255,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "[parameters('adminUserName')]",
+              "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
@@ -286,7 +286,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcBDCVMName')]",
-          "adminUsername": "[parameters('adminUsername')]",
+          "adminUsername": "[variables('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
@@ -344,7 +344,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "[parameters('adminUserName')]",
+              "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
