@@ -152,7 +152,7 @@
             "value": "[parameters('imageOffer')]"
           },
           "imageSKU": {
-            "value": "[parameters('adminUserName')]"
+            "value": "[parameters('imageSKU')]"
           },
           "DomainName": {
             "value": "[parameters('DomainName')]"
