@@ -111,7 +111,7 @@
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "adBDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADBDC.ps1.zip')]",
     "adBDCConfigurationFunction": "CreateADBDC.ps1\\CreateADBDC",
-    "adminUserName": "[concat(parameters('EnvironmentPrefix'),'_admin')"
+    "adminUserName": "[concat(parameters('EnvironmentPrefix'),'admin')"
   },
   "resources": [
     //Create a availability set
