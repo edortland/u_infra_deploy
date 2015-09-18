@@ -142,12 +142,7 @@
               }
             }
           }
-        ],
-        "dnsServers": {
-          "value": [
-            "[variables('dcPDCNicIPAddress')]"
-          ]
-        }
+        ]
       }
     },
     //NIC for BDC
@@ -168,12 +163,7 @@
               }
             }
           }
-        ],
-        "dnsServers": {
-          "value": [
-            "[variables('dcBDCNicIPAddress')]"
-          ]
-        }
+        ]
 
       }
     },
