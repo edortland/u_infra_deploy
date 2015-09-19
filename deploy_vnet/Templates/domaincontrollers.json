@@ -175,10 +175,8 @@
         }
 
       }
-    },
 
-    //Deploy two VMs
-    //Deploy PDC VM
+    },
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines",
@@ -197,7 +195,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcPDCVMName')]",
-          "adminUsername": "[variables('AdminUsername')]",
+          "adminUsername": "testadmin",
           "adminPassword": "[parameters('AdminPassword')]"
         },
         "storageProfile": {
@@ -255,7 +253,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "[variables('adminUserName')]",
+              "UserName": "testadmin",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
@@ -275,7 +273,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces',variables('dcBDCNicName'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', variables('dcAvailabilitySetName'))]"
-        
+
       ],
       "properties": {
         "hardwareProfile": {
@@ -286,7 +284,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcBDCVMName')]",
-          "adminUsername": "[variables('adminUsername')]",
+          "adminUsername": "testadmin",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
@@ -344,7 +342,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "[variables('adminUserName')]",
+              "UserName": "testadmin",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
@@ -355,7 +353,10 @@
           }
         }
       }
+
     }
 
   ]
 }
+  
+  
