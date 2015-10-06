@@ -141,12 +141,13 @@
               }
             }
           }
-        ],
-        "dnsServers": {
-          "value": [
-            "[variables('dcPDCNicIPAddress')]"
-          ]
-        }
+        ]
+        //,
+        //"dnsServers": {
+        //  "value": [
+        //    "[variables('dcPDCNicIPAddress')]"
+        //  ]
+        //}
       }
     },
     //NIC for BDC
@@ -167,12 +168,13 @@
               }
             }
           }
-        ],
-        "dnsServers": {
-          "value": [
-            "[variables('dcBDCNicIPAddress')]"
-          ]
-        }
+        ]
+        //,
+        //"dnsServers": {
+        //  "value": [
+        //    "[variables('dcBDCNicIPAddress')]"
+        //  ]
+        //}
 
       }
 
@@ -195,7 +197,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcPDCVMName')]",
-          "adminUsername": "testadmin",
+          "adminUsername": "[variables('AdminUsername')]",
           "adminPassword": "[parameters('AdminPassword')]"
         },
         "storageProfile": {
@@ -253,7 +255,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "testadmin",
+              "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
@@ -284,7 +286,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcBDCVMName')]",
-          "adminUsername": "testadmin",
+          "adminUsername": "[variables('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
@@ -342,7 +344,7 @@
           "Properties": {
             "DomainName": "[parameters('domainName')]",
             "AdminCreds": {
-              "UserName": "testadmin",
+              "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
