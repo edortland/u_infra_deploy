@@ -111,7 +111,9 @@
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "adBDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADBDC.ps1.zip')]",
     "adBDCConfigurationFunction": "CreateADBDC.ps1\\CreateADBDC",
-    "adminUserName": "testadmin"
+    "adminUserName": "testadmin",
+    "DomainName":  "[concat(parameters('EnvironmentPrefix'),'.local')]"
+
   },
   "resources": [
     //Create a availability set
@@ -254,7 +256,7 @@
           "ModulesUrl": "[variables('adPDCModulesURL')]",
           "ConfigurationFunction": "[variables('adPDCConfigurationFunction')]",
           "Properties": {
-            "DomainName": "[parameters('domainName')]",
+            "DomainName": "[variables('domainName')]",
             "AdminCreds": {
               "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
@@ -344,7 +346,7 @@
           "ModulesUrl": "[variables('adBDCModulesURL')]",
           "ConfigurationFunction": "[variables('adBDCConfigurationFunction')]",
           "Properties": {
-            "DomainName": "[parameters('domainName')]",
+            "DomainName": "[variables('domainName')]",
             "AdminCreds": {
               "UserName": "[variables('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
