@@ -14,6 +14,12 @@
         "description": "The prefix of the environment you are deploying"
       }
     },
+    "TemplateLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of all the templates that are nested"
+      }
+    },
     "MainVmStorageAccount": {
       "type": "string",
       "metadata": {
@@ -58,6 +64,13 @@
         "description": "The FQDN of the AD Domain created "
       }
     },
+    
+    "DNSServerAddresses": {
+      "type": "array",
+      "metadata": {
+        "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
+      }
+    },
 
     "ScriptLocation": {
       "type": "string",
@@ -95,6 +108,7 @@
 
     "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vNETname'))]",
+    "vnetDNSTemplateUri": "[concat(parameters('TemplateLocation'),'/vnetdns.json')]",
     "SubnetRef": "[concat(variables('VnetID'),'/subnets/',parameters('Subnet'))]",
     "dcPDCVMName": "[concat(parameters('EnvironmentPrefix'),'dc01')]",
     "dcBDCVMName": "[concat(parameters('EnvironmentPrefix'),'dc02')]",
@@ -151,35 +165,6 @@
         //  ]
         //}
       }
-    },
-    //NIC for BDC
-    {
-      "name": "[variables('dcBDCNicName')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2015-05-01-preview",
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('dcBDCNicIPAddress')]",
-              "subnet": {
-                "id": "[variables('subNetRef')]"
-              }
-            }
-          }
-        ]
-        //,
-        //"dnsServers": {
-        //  "value": [
-        //    "[variables('dcBDCNicIPAddress')]"
-        //  ]
-        //}
-
-      }
-
     },
     {
       "apiVersion": "2015-05-01-preview",
@@ -269,6 +254,61 @@
           }
         }
       }
+    },
+    {
+      "name": "VNetDNS",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('dcPDCVMName'),'/extensions/CreateADForest')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vnetDNSTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+          "DNSServerAddresses": {
+            "value": "[parameters('DNSServerAddresses')]"
+          }
+        }
+      }
+    },
+    //NIC for BDC
+    {
+      "name": "[variables('dcBDCNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-05-01-preview",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/VNetDNS"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('dcBDCNicIPAddress')]",
+              "subnet": {
+                "id": "[variables('subNetRef')]"
+              }
+            }
+          }
+        ]
+        ,
+        "dnsServers": {
+          "value": [
+            "[variables('dcPDCNicIPAddress')]"
+          ]
+        }
+
+      }
+
     },
     {
       "apiVersion": "2015-05-01-preview",

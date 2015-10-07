@@ -32,6 +32,7 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Scripts\Deploy-AzureResourceGroup.ps1" />
+    <Content Include="Templates\vnetdns.json" />
     <Content Include="Templates\vnet.json" />
     <None Include="Scripts\CreateADBDC.ps1.zip" />
     <None Include="Scripts\CreateADPDC.ps1.zip" />
