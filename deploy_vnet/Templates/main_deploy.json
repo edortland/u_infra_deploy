@@ -215,18 +215,6 @@
           },
           "imageSKU": {
             "value": "[parameters('imageSKU')]"
-          },
-          "DomainName": {
-            "value": "[parameters('DomainName')]"
-          },
-          "DNSServerAddresses": {
-            "value": "[parameters('DNSServerAddresses')]"
-          },
-          "TemplateLocation": {
-            "value": "[parameters('TemplateLocation')]"
-          },
-          "ScriptLocation": {
-            "value": "[parameters('ScriptLocation')]"
           }
         }
       }
