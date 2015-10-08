@@ -70,7 +70,7 @@
     "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
     "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
-    "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/webservers.json')]",
+    "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/Webservers.json')]",
     "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]"
 
   },

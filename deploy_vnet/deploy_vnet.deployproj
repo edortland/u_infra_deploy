@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Templates\VMStorageAccount.json" />
-    <None Include="Templates\Webservers.json" />
+    <None Include="Templates\webservers.json" />
     <None Include="Templates\webservers_original.json" />
     <None Include="Tools\AzCopy.exe" />
     <None Include="Tools\Microsoft.Data.Edm.dll">
