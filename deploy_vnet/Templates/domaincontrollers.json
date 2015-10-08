@@ -108,8 +108,8 @@
 
     "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vNETname'))]",
-    "vnetDNSTemplateUri": "[concat(parameters('TemplateLocation'),'/vnetdns.json')]",
     "SubnetRef": "[concat(variables('VnetID'),'/subnets/',parameters('Subnet'))]",
+    "vnetDNSTemplateUri": "[concat(parameters('TemplateLocation'),'/vnetdns.json')]",
     "dcPDCVMName": "[concat(parameters('EnvironmentPrefix'),'dc01')]",
     "dcBDCVMName": "[concat(parameters('EnvironmentPrefix'),'dc02')]",
     "dcAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_domaincontrollers')]",
@@ -120,7 +120,7 @@
     "dcPDCDatadisk": "dcPDCDatadisk1",
     "dcBDCDatadisk": "dcBDCDatadisk1",
     "vmSize": "standard_d1",
-    "DataDiskSize": 1000,
+    "DataDiskSize": 20,
     "adPDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADPDC.ps1.zip')]",
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "adBDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADBDC.ps1.zip')]",
@@ -197,7 +197,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/vhds0/','osdisk.vhd')]"
+             "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -205,9 +205,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/vhds0/', variables('dcPDCDataDisk'),'-1.vhd')]"
+                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_datadisk1.vhd')]"
               },
-              "name": "[concat(variables('dcPDCVMName'),'-data-disk1')]",
+              "name": "[concat(variables('dcPDCVMName'),'_datadisk1')]",
               "caching": "None",
               "diskSizeGB": "[variables('DataDiskSize')]",
               "lun": 0,
@@ -342,7 +342,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/vhds1/','osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -350,9 +350,9 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/vhds1/', variables('dcBDCDataDisk'),'-1.vhd')]"
+                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_datadisk1.vhd')]"
               },
-              "name": "[concat(variables('dcBDCVMName'),'-data-disk1')]",
+              "name": "[concat(variables('dcBDCVMName'),'_datadisk1')]",
               "caching": "None",
               "diskSizeGB": "[variables('DataDiskSize')]",
               "lun": 0,
