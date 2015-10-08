@@ -255,7 +255,6 @@
       },
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('MainVmStorageAccount'))]",
         "[concat('Microsoft.Network/networkInterfaces/', variables('webnicNamePrefix'), copyindex(1))]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('WebAvailabilitySetName'))]"
       ],
