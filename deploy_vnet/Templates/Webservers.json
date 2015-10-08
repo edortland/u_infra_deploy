@@ -314,7 +314,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat('DomainJoin', copyindex(1))]",
+      "name": "[concat(variables('webvmNamePrefix'), copyindex(1),'/DomainJoin')]",
       "apiVersion": "2015-05-01-preview",
       "copy": {
         "name": "JoinDomainLoop",
