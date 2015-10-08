@@ -196,7 +196,7 @@
             "value": "[variables('MainVmStorageAccount')]"
           },
           "dnsNameforWebFrontLBIP": {
-            "value": "Testurl"
+            "value": "testurl"
           },
           "subNet": {
             "value": "[variables('WebserversSubnet')]"
