@@ -36,6 +36,7 @@
     <Content Include="Templates\vnet.json" />
     <None Include="Scripts\CreateADBDC.ps1.zip" />
     <None Include="Scripts\CreateADPDC.ps1.zip" />
+    <None Include="Scripts\JoinDomain.ps1.zip" />
     <None Include="Templates\domaincontrollers.json" />
     <None Include="Templates\main_deploy.json" />
     <None Include="Templates\main_deploy.parameters.json" />
@@ -43,7 +44,6 @@
   <ItemGroup>
     <None Include="Templates\VMStorageAccount.json" />
     <None Include="Templates\webservers.json" />
-    <None Include="Templates\webservers_original.json" />
     <None Include="Tools\AzCopy.exe" />
     <None Include="Tools\Microsoft.Data.Edm.dll">
       <Visible>False</Visible>

@@ -72,6 +72,12 @@
         "description": "Image SKU"
       }
     },
+    "ScriptLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of resources such as  and DSC modules that the script is dependent"
+      }
+    }
 
 
 
@@ -101,7 +107,12 @@
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
     "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
-    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]"
+    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
+
+    "JoinDomainModulesURL": "[concat(parameters('ScriptLocation'),'/JoinDomain.ps1.zip')]",
+    "JoinDomainConfigurationFunction": "Configuration.ps1\\DomainJoin",
+    "DomainName":  "[concat(parameters('EnvironmentPrefix'),'.local')]"
+
   },
   "resources": [
     //Create a availability set
@@ -297,6 +308,41 @@
           "bootDiagnostics": {
              "enabled": "true",
              "storageUri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "vm/domainjoin",
+      "apiVersion": "2015-05-01-preview",
+      "copy": {
+        "name": "JoinDomainLoop",
+        "count": "[variables('numberOfInstances')]"
+      },
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat(variables('webvmNamePrefix'), copyindex(1))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": "true",
+        "settings": {
+          "ModulesUrl": "[variables('JoinDomainModulesURL')]",
+          "ConfigurationFunction": "[variables('JoinDomainConfigurationFunction')]",
+          "Properties": {
+            "DomainName": "[variables('domainName')]",
+            "AdminCreds": {
+              "UserName": "[parameters('adminUsername')]",
+              "Password": "PrivateSettingsRef:adminPassword"
+            }
+          }
+        },
+        "protectedSettings": {
+          "Items": {
+            "adminPassword": "[parameters('adminPassword')]"
           }
         }
       }
