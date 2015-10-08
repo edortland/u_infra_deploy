@@ -42,6 +42,8 @@
     <None Include="Templates\main_deploy.parameters.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Templates\SQLServerAGcluster_original.json" />
+    <None Include="Templates\SQLServerAGcluster.json" />
     <None Include="Templates\VMStorageAccount.json" />
     <None Include="Templates\webservers.json" />
     <None Include="Tools\AzCopy.exe" />
