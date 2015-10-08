@@ -217,6 +217,9 @@
           },
           "imageSKU": {
             "value": "[parameters('imageSKU')]"
+          },
+          "ScriptLocation": {
+            "value": "[parameters('ScriptLocation')]"
           }
         }
       }
