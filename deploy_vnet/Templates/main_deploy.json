@@ -50,6 +50,12 @@
         "description": "fqdn of the domain that you want deployed"
       }
     },
+    "AdminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "default name of the admin account."
+      }
+    },
     "DNSServerAddresses": {
       "type": "array",
       "metadata": {
@@ -63,7 +69,10 @@
     "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
     "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
-    "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]"
+    "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
+    "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/webservers.json')]",
+    "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]"
+
   },
   "resources": [
     {
@@ -126,14 +135,74 @@
         "parameters": {
           "EnvironmentPrefix": {
             "value": "[parameters('EnvironmentPrefix')]"
-          }
-          ,
-          
+          },
+
           "MainVmStorageAccount": {
             "value": "[variables('MainVmStorageAccount')]"
           },
           "subNet": {
             "value": "[variables('DomainControllersSubnet')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('AdminUsername')]"
+          },
+          "adminPassword": {
+            "value": "1234@#$%abcd"
+          },
+          "imagePublisher": {
+            "value": "[parameters('imagePublisher')]"
+          },
+          "imageOffer": {
+            "value": "[parameters('imageOffer')]"
+          },
+          "imageSKU": {
+            "value": "[parameters('imageSKU')]"
+          },
+          "DomainName": {
+            "value": "[parameters('DomainName')]"
+          },
+          "DNSServerAddresses": {
+            "value": "[parameters('DNSServerAddresses')]"
+          },
+          "TemplateLocation": {
+            "value": "[parameters('TemplateLocation')]"
+          },
+          "ScriptLocation": {
+            "value": "[parameters('ScriptLocation')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "webservers",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "VMStorage"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('webserversTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+
+          "MainVmStorageAccount": {
+            "value": "[variables('MainVmStorageAccount')]"
+          },
+          "dnsNameforWebFrontLBIP": {
+            "value": "Testurl"
+          },
+          "subNet": {
+            "value": "[variables('WebserversSubnet')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('AdminUsername')]"
           },
           "adminPassword": {
             "value": "1234@#$%abcd"

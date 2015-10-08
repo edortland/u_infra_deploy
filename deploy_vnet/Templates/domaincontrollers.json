@@ -32,6 +32,12 @@
         "description": "Name of the subnet in which the domain controllers need to bee deployed"
       }
     },
+    "AdminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username of the administrator account"
+      }
+    },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
@@ -125,7 +131,7 @@
     "adPDCConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
     "adBDCModulesURL": "[concat(parameters('ScriptLocation'),'/CreateADBDC.ps1.zip')]",
     "adBDCConfigurationFunction": "CreateADBDC.ps1\\CreateADBDC",
-    "adminUserName": "testadmin",
+    //"adminUserName": "testadmin",
     "DomainName":  "[concat(parameters('EnvironmentPrefix'),'.local')]"
 
   },
@@ -184,7 +190,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcPDCVMName')]",
-          "adminUsername": "[variables('AdminUsername')]",
+          "adminUsername": "[parameters('AdminUsername')]",
           "adminPassword": "[parameters('AdminPassword')]"
         },
         "storageProfile": {
@@ -243,7 +249,7 @@
           "Properties": {
             "DomainName": "[variables('domainName')]",
             "AdminCreds": {
-              "UserName": "[variables('adminUserName')]",
+              "UserName": "[parameters('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
@@ -329,7 +335,7 @@
         },
         "osProfile": {
           "computername": "[variables('dcBDCVMName')]",
-          "adminUsername": "[variables('adminUsername')]",
+          "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
@@ -388,7 +394,7 @@
           "Properties": {
             "DomainName": "[variables('domainName')]",
             "AdminCreds": {
-              "UserName": "[variables('adminUserName')]",
+              "UserName": "[parameters('adminUserName')]",
               "Password": "PrivateSettingsRef:AdminPassword"
             }
           }
