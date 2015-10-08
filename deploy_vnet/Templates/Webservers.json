@@ -280,7 +280,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('WebVMNamePrefix'),'/',variables('WebVMNamePrefix'),'_osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('WebVMNamePrefix'),'/',variables('WebVMNamePrefix'),copyindex(1),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
