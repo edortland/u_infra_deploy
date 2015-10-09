@@ -108,122 +108,124 @@
         "parameters": {
           "EnvironmentPrefix": {
             "value": "[parameters('EnvironmentPrefix')]"
-          },
-          "MainVmStorageAccount": {
-            "value": "[variables('MainVmStorageAccount')]"
-          },
-          "storageAccountType": {
-            "value": "[variables('storageAccountType')]"
           }
-        }
-      }
-    },
-    {
-      "name": "DomainControllers",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "VMStorage"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('DomainControllersTemplateUri')]",
-          "contentVersion": "1.0.0.0"
-        },
-
-        "parameters": {
-          "EnvironmentPrefix": {
-            "value": "[parameters('EnvironmentPrefix')]"
-          },
-
-          "MainVmStorageAccount": {
-            "value": "[variables('MainVmStorageAccount')]"
-          },
-          "subNet": {
-            "value": "[variables('DomainControllersSubnet')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('AdminUsername')]"
-          },
-          "adminPassword": {
-            "value": "1234@#$%abcd"
-          },
-          "imagePublisher": {
-            "value": "[parameters('imagePublisher')]"
-          },
-          "imageOffer": {
-            "value": "[parameters('imageOffer')]"
-          },
-          "imageSKU": {
-            "value": "[parameters('imageSKU')]"
-          },
-          "DomainName": {
-            "value": "[parameters('DomainName')]"
-          },
-          "DNSServerAddresses": {
-            "value": "[parameters('DNSServerAddresses')]"
-          },
-          "TemplateLocation": {
-            "value": "[parameters('TemplateLocation')]"
-          },
-          "ScriptLocation": {
-            "value": "[parameters('ScriptLocation')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "Webservers",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "VMStorage",
-        "VNet",
-        "DomainControllers"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('webserversTemplateUri')]",
-          "contentVersion": "1.0.0.0"
-        },
-
-        "parameters": {
-          "EnvironmentPrefix": {
-            "value": "[parameters('EnvironmentPrefix')]"
-          },
-
-          "MainVmStorageAccount": {
-            "value": "[variables('MainVmStorageAccount')]"
-          },
-          "dnsNameforWebFrontLBIP": {
-            "value": "testurl"
-          },
-          "subNet": {
-            "value": "[variables('WebserversSubnet')]"
-          },
-          "adminUserName": {
-            "value": "[parameters('AdminUsername')]"
-          },
-          "adminPassword": {
-            "value": "1234@#$%abcd"
-          },
-          "imagePublisher": {
-            "value": "[parameters('imagePublisher')]"
-          },
-          "imageOffer": {
-            "value": "[parameters('imageOffer')]"
-          },
-          "imageSKU": {
-            "value": "[parameters('imageSKU')]"
-          },
-          "ScriptLocation": {
-            "value": "[parameters('ScriptLocation')]"
-          }
+          //,
+          //"MainVmStorageAccount": {
+          //  "value": "[variables('MainVmStorageAccount')]"
+          //},
+          //"storageAccountType": {
+          //  "value": "[variables('storageAccountType')]"
+          //}
         }
       }
     }
+    //,
+    //{
+    //  "name": "DomainControllers",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "VMStorage"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('DomainControllersTemplateUri')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+
+    //    "parameters": {
+    //      "EnvironmentPrefix": {
+    //        "value": "[parameters('EnvironmentPrefix')]"
+    //      },
+
+    //      "MainVmStorageAccount": {
+    //        "value": "[variables('MainVmStorageAccount')]"
+    //      },
+    //      "subNet": {
+    //        "value": "[variables('DomainControllersSubnet')]"
+    //      },
+    //      "adminUsername": {
+    //        "value": "[parameters('AdminUsername')]"
+    //      },
+    //      "adminPassword": {
+    //        "value": "1234@#$%abcd"
+    //      },
+    //      "imagePublisher": {
+    //        "value": "[parameters('imagePublisher')]"
+    //      },
+    //      "imageOffer": {
+    //        "value": "[parameters('imageOffer')]"
+    //      },
+    //      "imageSKU": {
+    //        "value": "[parameters('imageSKU')]"
+    //      },
+    //      "DomainName": {
+    //        "value": "[parameters('DomainName')]"
+    //      },
+    //      "DNSServerAddresses": {
+    //        "value": "[parameters('DNSServerAddresses')]"
+    //      },
+    //      "TemplateLocation": {
+    //        "value": "[parameters('TemplateLocation')]"
+    //      },
+    //      "ScriptLocation": {
+    //        "value": "[parameters('ScriptLocation')]"
+    //      }
+    //    }
+    //  }
+    //},
+    //{
+    //  "name": "Webservers",
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2015-01-01",
+    //  "dependsOn": [
+    //    "VMStorage",
+    //    "VNet",
+    //    "DomainControllers"
+    //  ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[variables('webserversTemplateUri')]",
+    //      "contentVersion": "1.0.0.0"
+    //    },
+
+    //    "parameters": {
+    //      "EnvironmentPrefix": {
+    //        "value": "[parameters('EnvironmentPrefix')]"
+    //      },
+
+    //      "MainVmStorageAccount": {
+    //        "value": "[variables('MainVmStorageAccount')]"
+    //      },
+    //      "dnsNameforWebFrontLBIP": {
+    //        "value": "testurl"
+    //      },
+    //      "subNet": {
+    //        "value": "[variables('WebserversSubnet')]"
+    //      },
+    //      "adminUserName": {
+    //        "value": "[parameters('AdminUsername')]"
+    //      },
+    //      "adminPassword": {
+    //        "value": "1234@#$%abcd"
+    //      },
+    //      "imagePublisher": {
+    //        "value": "[parameters('imagePublisher')]"
+    //      },
+    //      "imageOffer": {
+    //        "value": "[parameters('imageOffer')]"
+    //      },
+    //      "imageSKU": {
+    //        "value": "[parameters('imageSKU')]"
+    //      },
+    //      "ScriptLocation": {
+    //        "value": "[parameters('ScriptLocation')]"
+    //      }
+    //    }
+    //  }
+    //}
   ],
     "outputs": {
     }

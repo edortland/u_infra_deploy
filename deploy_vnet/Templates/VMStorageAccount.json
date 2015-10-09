@@ -14,30 +14,83 @@
       "metadata": {
         "description": "The prefix of the environment you are deploying"
       }
-    },
-    "MainVMStorageAccount": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the storage account to create"
-      }
-    },
-    "storageAccountType": {
-      "type": "string",
-      "metadata": {
-        "description": "type of storage"
-      }
     }
+    //,
+    //"MainVMStorageAccount": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "Name of the storage account to create"
+    //  }
+    //},
+    //"storageAccountType": {
+    //  "type": "string",
+    //  "metadata": {
+    //    "description": "type of storage"
+    //  }
+    //}
   },
   "variables": {
+
+    "VMnormalStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmnormal0')]",
+    "VMnormalStorageAccountType": "Standard_LRS",
+    "VMnormalStorageAccountCount" : 2, 
+    "VMDiagStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdiag0')]",
+    "VMDiagStorageAccountType": "Standard_LRS",
+    "VMDiagStorageAccountCount" : 1,   
+    "VMFastStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmpremium0')]",
+    "VMFastStorageAccountType": "Premium_LRS",
+    "VMFastStorageAccountCount" : 2
+    
+
+
   },
   "resources": [
+    //{
+    //  "type": "Microsoft.Storage/storageAccounts",
+    //  "name": "[parameters('MainVMStorageAccount')]",
+    //  "apiVersion": "2015-05-01-preview",
+    //  "location": "[resourceGroup().location]",
+    //  "properties": {
+    //    "accountType": "[parameters('storageAccountType')]"
+    //  }
+    //},
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('MainVMStorageAccount')]",
+      "name": "[concat(variables('VMnormalStorageAccountName'), copyindex(1))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
+      "copy": {
+        "name": "[concat(variables('VMnormalStorageAccountName'),'loop'))]",
+        "count": "[variables('VMnormalStorageAccountCount')]"
+      },
       "properties": {
-        "accountType": "[parameters('storageAccountType')]"
+        "accountType": "[variables('VMnormalStorageAccountType')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[concat(variables('VMDiagStorageAccountName'), copyindex(1))]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "copy": {
+        "name": "[concat(variables('VMDiagStorageAccountName'),'loop')]",
+        "count": "[variables('VMDiagStorageAccountCount')]"
+      },
+      "properties": {
+        "accountType": "[variables('VMDiagStorageAccountType')]"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[concat(variables('VMFastStorageAccountName'), copyindex(1))]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "copy": {
+        "name": "[concat(variables('VMFastStorageAccountName'),'loop')]",
+        "count": "[variables('VMFastStorageAccountCount')]"
+      },
+      "properties": {
+        "accountType": "[variables('VMFastStorageAccountType')]"
       }
     }
   ],
