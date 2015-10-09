@@ -20,7 +20,7 @@
         "description": "The location of all the templates that are nested"
       }
     },
-    "MainVmStorageAccount": {
+    "VMNormalStorageAccountNamePrefix": {
       "type": "string",
       "metadata": {
         "description": "The name of the storage account where the disks of the 2 domain controller VMs are deployed"
@@ -203,7 +203,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-             "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_osdisk.vhd')]"
+             "uri": "[concat('http://',parameters('VMNormalStorageAccountNamePrefix'),'1.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -211,7 +211,7 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_datadisk1.vhd')]"
+                "uri": "[concat('http://',parameters('VMNormalStorageAccountNamePrefix'),'1.blob.core.windows.net/',variables('dcPDCVMName'),'/',variables('dcPDCVMName'),'_datadisk1.vhd')]"
               },
               "name": "[concat(variables('dcPDCVMName'),'_datadisk1')]",
               "caching": "None",
@@ -348,7 +348,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('VMNormalStorageAccountNamePrefix'),'2.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -356,7 +356,7 @@
           "dataDisks": [
             {
               "vhd": {
-                "uri": "[concat('http://',parameters('MainVmStorageAccount'),'.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_datadisk1.vhd')]"
+                "uri": "[concat('http://',parameters('VMNormalStorageAccountNamePrefix'),'2.blob.core.windows.net/',variables('dcBDCVMName'),'/',variables('dcBDCVMName'),'_datadisk1.vhd')]"
               },
               "name": "[concat(variables('dcBDCVMName'),'_datadisk1')]",
               "caching": "None",

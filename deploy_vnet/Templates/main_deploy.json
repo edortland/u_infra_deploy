@@ -214,8 +214,8 @@
             "value": "[parameters('EnvironmentPrefix')]"
           },
 
-          "MainVmStorageAccount": {
-            "value": "[variables('MainVmStorageAccount')]"
+          "VMNormalStorageAccountNamePrefix": {
+           "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
           "subNet": {
             "value": "[variables('DomainControllersSubnet')]"
