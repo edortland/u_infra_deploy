@@ -116,18 +116,20 @@
       "type": "int",
       "metadata": {
         "decription": "Amount of diag storage accounts that need to be created"
-        }
+      }
     }
   },
 
   "variables": {
-   
+
     "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
     "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
     "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
     "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/Webservers.json')]",
-    "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]"
+    "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
+    "SqlClusterTemplateUri": "[concat(parameters('TemplateLocation'),'/SQLServerAGcluster.json')]",
+    "SQLserverSubnet": "[concat(parameters('EnvironmentPrefix'),'_DataRestricted')]"
 
   },
   "resources": [
@@ -298,7 +300,76 @@
     //      }
     //    }
     //  }
-    //}
+    //},
+    ,
+    {
+      "name": "SQLCluster",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "VMStorage",
+        "VNet"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('SqlClusterTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+
+          "VMnormalStorageAccountNamePrefix": {
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
+          },
+          "VMFastStorageAccountNamePrefix": {
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMFastStorageAccountNameSuffix'))]"
+          },
+          "VMDiagStorageAccountNamePrefix": {
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
+          },
+          "VMfunctionNameShortcut": {
+            "value": "sql"
+          },
+          "subNet": {
+            "value": "[variables('SQLserverSubnet')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('AdminUsername')]"
+          },
+          "adminPassword": {
+            "value": "1234@#$%abcd"
+          },
+          "sqlServerServiceAccountUserName": {
+            "value": "sqlservice"
+          },
+          "sqlServerServiceAccountPassword": {
+            "value": "1234@#$%abcd"
+          },
+          "imageSKU": {
+            "value": "[parameters('imageSKU')]"
+          },
+          "ScriptLocation": {
+            "value": "[parameters('ScriptLocation')]"
+          },
+          "SQLLBIPAddress": {
+            "value": "10.2.1.10"
+          },
+          "AvailabilitySetName": {
+            "value": "SQLcluster"
+          },
+          "AvailabilitySetFaultdomaincount": {
+            "value": 3
+          },
+          "AvailabilitySetUpdateDomainCount": {
+            "value": 3
+          }
+        }
+      }
+    }
   ],
     "outputs": {
     }
