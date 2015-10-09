@@ -27,7 +27,34 @@
       "value": [ "10.1.2.11", "10.1.2.12" ]
     },
     "AdminUsername": {
-          "value": "soladmin"
-      }
+      "value": "soladmin"
+    },
+    "VMnormalStorageAccountNamePrefix": {
+      "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmnorm0')]"
+    },
+    "VMnormalStorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "VMnormalStorageAccountCount": {
+      "value": 2
+    },
+    "VMFastStorageAccountNamePrefix": {
+      "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmfast0')]"
+    },
+    "VMFastStorageAccountType": {
+      "value": "Premium_LRS"
+    },
+    "VMFastStorageAccountCount": {
+      "value": 2
+    },
+    "VMDiagStorageAccountNamePrefix": {
+      "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdiag0')]"
+    },
+    "VMDiagStorageAccountType": {
+      "value": "Standard_LRS"
+    },
+    "VMDiagStorageAccountCount": {
+      "value": 2
+    }
   }
 }

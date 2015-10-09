@@ -2,95 +2,101 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-
-    "EnvironmentPrefix": {
+    "VMnormalStorageAccountNamePrefix": {
       "type": "string",
-      "allowedValues": [
-        "usgt",
-        "usgx",
-        "usgp",
-        "usgd"
-      ],
       "metadata": {
-        "description": "The prefix of the environment you are deploying"
+        "description": "Name prefix of the normal storage accounts"
       }
+    },
+    "VMFastStorageAccountNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix of the fast storage accounts"
+      }
+    },
+    "VMDiagStorageAccountNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix of the diag storage accounts"
+      }
+    },
+    "VMnormalStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for normal storage"
+      }
+    },
+    "VMFastStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for fast storage"
+      }
+    },
+    "VMDiagStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for diag storage"
+      }
+    },
+    "VMnormalStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of normal storage accounts that need to be created"
+      }
+    },
+    "VMFastStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of fast storage accounts that need to be created"
+      }
+    },
+    "VMDiagStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of diag storage accounts that need to be created"
+        }
     }
-    //,
-    //"MainVMStorageAccount": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "Name of the storage account to create"
-    //  }
-    //},
-    //"storageAccountType": {
-    //  "type": "string",
-    //  "metadata": {
-    //    "description": "type of storage"
-    //  }
-    //}
   },
   "variables": {
-
-    "VMnormalStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmnorm0')]",
-    "VMnormalStorageAccountType": "Standard_LRS",
-    "VMnormalStorageAccountCount" : 2, 
-    "VMDiagStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdiag0')]",
-    "VMDiagStorageAccountType": "Standard_LRS",
-    "VMDiagStorageAccountCount" : 1,   
-    "VMFastStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmprem0')]",
-    "VMFastStorageAccountType": "Premium_LRS",
-    "VMFastStorageAccountCount" : 2
-    
-
-
-  },
+     },
   "resources": [
-    //{
-    //  "type": "Microsoft.Storage/storageAccounts",
-    //  "name": "[parameters('MainVMStorageAccount')]",
-    //  "apiVersion": "2015-05-01-preview",
-    //  "location": "[resourceGroup().location]",
-    //  "properties": {
-    //    "accountType": "[parameters('storageAccountType')]"
-    //  }
-    //},
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(variables('VMnormalStorageAccountName'), copyindex(1))]",
+      "name": "[concat(parameters('VMnormalStorageAccountNamePrefix'), copyindex(1))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "copy": {
-        "name": "[concat(variables('VMnormalStorageAccountName'),'loop')]",
-        "count": "[variables('VMnormalStorageAccountCount')]"
+        "name": "[concat(parameters('VMnormalStorageAccountNamePrefix'),'loop')]",
+        "count": "[parameters('VMnormalStorageAccountCount')]"
       },
       "properties": {
-        "accountType": "[variables('VMnormalStorageAccountType')]"
+        "accountType": "[parameters('VMnormalStorageAccountType')]"
       }
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(variables('VMDiagStorageAccountName'), copyindex(1))]",
+      "name": "[concat(parameters('VMDiagStorageAccountNamePrefix'), copyindex(1))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "copy": {
-        "name": "[concat(variables('VMDiagStorageAccountName'),'loop')]",
-        "count": "[variables('VMDiagStorageAccountCount')]"
+        "name": "[concat(parameters('VMDiagStorageAccountNamePrefix'),'loop')]",
+        "count": "[parameters('VMDiagStorageAccountCount')]"
       },
       "properties": {
-        "accountType": "[variables('VMDiagStorageAccountType')]"
+        "accountType": "[parameters('VMDiagStorageAccountType')]"
       }
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[concat(variables('VMFastStorageAccountName'), copyindex(1))]",
+      "name": "[concat(parameters('VMFastStorageAccountNamePrefix'), copyindex(1))]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "copy": {
-        "name": "[concat(variables('VMFastStorageAccountName'),'loop')]",
-        "count": "[variables('VMFastStorageAccountCount')]"
+        "name": "[concat(parameters('VMFastStorageAccountNamePrefix'),'loop')]",
+        "count": "[parameters('VMFastStorageAccountCount')]"
       },
       "properties": {
-        "accountType": "[variables('VMFastStorageAccountType')]"
+        "accountType": "[parameters('VMFastStorageAccountType')]"
       }
     }
   ],

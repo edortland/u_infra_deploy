@@ -61,11 +61,67 @@
       "metadata": {
         "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
       }
+    },
+
+    //Parameters needed to create storage accounts
+    "VMnormalStorageAccountNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix of the normal storage accounts"
+      }
+    },
+    "VMFastStorageAccountNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix of the fast storage accounts"
+      }
+    },
+    "VMDiagStorageAccountNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Name prefix of the diag storage accounts"
+      }
+    },
+    "VMnormalStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for normal storage"
+      }
+    },
+    "VMFastStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for fast storage"
+      }
+    },
+    "VMDiagStorageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "type of storage account for diag storage"
+      }
+    },
+    "VMnormalStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of normal storage accounts that need to be created"
+      }
+    },
+    "VMFastStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of fast storage accounts that need to be created"
+      }
+    },
+    "VMDiagStorageAccountCount": {
+      "type": "int",
+      "metadata": {
+        "decription": "Amount of diag storage accounts that need to be created"
+        }
     }
   },
+
   "variables": {
-    "MainVmStorageAccount": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdata')]",
-    "storageAccountType": "Standard_LRS",
+   
     "vnetTemplateUri": "[concat(parameters('TemplateLocation'),'/vnet.json')]",
     "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
@@ -106,16 +162,33 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "EnvironmentPrefix": {
-            "value": "[parameters('EnvironmentPrefix')]"
+          "VMnormalStorageAccountNamePrefix": {
+            "value": "[parameters('VMnormalStorageAccountNamePrefix')]"
+          },
+          "VMnormalStorageAccountType": {
+            "value": "[parameters('VMnormalStorageAccountType')]"
+          },
+          "VMnormalStorageAccountCount": {
+            "value": "[parameters('VMnormalStorageAccountCount')]"
+          },
+          "VMFastStorageAccountNamePrefix": {
+            "value": "[parameters('VMFastStorageAccountNamePrefix')]"
+          },
+          "VMFastStorageAccountType": {
+            "value": "[parameters('VMFastStorageAccountType')]"
+          },
+          "VMFastStorageAccountCount": {
+            "value": "[parameters('VMFastStorageAccountCount')]"
+          },
+          "VMDiagStorageAccountNamePrefix": {
+            "value": "[parameters('VMDiagStorageAccountNamePrefix')]"
+          },
+          "VMDiagStorageAccountType": {
+            "value": "[parameters('VMDiagStorageAccountType')]"
+          },
+          "VMDiagStorageAccountCount": {
+            "value": "[parameters('VMDiagStorageAccountCount')]"
           }
-          //,
-          //"MainVmStorageAccount": {
-          //  "value": "[variables('MainVmStorageAccount')]"
-          //},
-          //"storageAccountType": {
-          //  "value": "[variables('storageAccountType')]"
-          //}
         }
       }
     }
