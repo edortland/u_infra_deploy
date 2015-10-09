@@ -31,13 +31,13 @@
   },
   "variables": {
 
-    "VMnormalStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmnormal0')]",
+    "VMnormalStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmnorm0')]",
     "VMnormalStorageAccountType": "Standard_LRS",
     "VMnormalStorageAccountCount" : 2, 
     "VMDiagStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmdiag0')]",
     "VMDiagStorageAccountType": "Standard_LRS",
     "VMDiagStorageAccountCount" : 1,   
-    "VMFastStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmpremium0')]",
+    "VMFastStorageAccountName": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,'vmprem0')]",
     "VMFastStorageAccountType": "Premium_LRS",
     "VMFastStorageAccountCount" : 2
     
