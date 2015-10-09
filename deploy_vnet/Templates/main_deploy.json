@@ -64,22 +64,22 @@
     },
 
     //Parameters needed to create storage accounts
-    "VMnormalStorageAccountNamePrefix": {
+    "VMnormalStorageAccountNameSuffix": {
       "type": "string",
       "metadata": {
-        "description": "Name prefix of the normal storage accounts"
+        "description": "Name suffix of the normal storage accounts"
       }
     },
-    "VMFastStorageAccountNamePrefix": {
+    "VMFastStorageAccountNameSuffix": {
       "type": "string",
       "metadata": {
-        "description": "Name prefix of the fast storage accounts"
+        "description": "Name suffix of the fast storage accounts"
       }
     },
-    "VMDiagStorageAccountNamePrefix": {
+    "VMDiagStorageAccountNameSuffix": {
       "type": "string",
       "metadata": {
-        "description": "Name prefix of the diag storage accounts"
+        "description": "Name suffix of the diag storage accounts"
       }
     },
     "VMnormalStorageAccountType": {
@@ -163,7 +163,7 @@
         },
         "parameters": {
           "VMnormalStorageAccountNamePrefix": {
-            "value": "[parameters('VMnormalStorageAccountNamePrefix')]"
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
           "VMnormalStorageAccountType": {
             "value": "[parameters('VMnormalStorageAccountType')]"
@@ -172,7 +172,7 @@
             "value": "[parameters('VMnormalStorageAccountCount')]"
           },
           "VMFastStorageAccountNamePrefix": {
-            "value": "[parameters('VMFastStorageAccountNamePrefix')]"
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMFastStorageAccountNameSuffix'))]"
           },
           "VMFastStorageAccountType": {
             "value": "[parameters('VMFastStorageAccountType')]"
@@ -181,7 +181,7 @@
             "value": "[parameters('VMFastStorageAccountCount')]"
           },
           "VMDiagStorageAccountNamePrefix": {
-            "value": "[parameters('VMDiagStorageAccountNamePrefix')]"
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
           },
           "VMDiagStorageAccountType": {
             "value": "[parameters('VMDiagStorageAccountType')]"
