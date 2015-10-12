@@ -350,9 +350,6 @@
           "sqlServerServiceAccountPassword": {
             "value": "1234@#$%abcd"
           },
-          "imageSKU": {
-            "value": "[parameters('imageSKU')]"
-          },
           "ScriptLocation": {
             "value": "[parameters('ScriptLocation')]"
           },
