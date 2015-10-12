@@ -171,7 +171,7 @@
     "sqlAOAGName": "sqlaoag01",
     "sqlAOListenerName": "sqlaoag-list",
     "clusterName": "sqlcl01",
-    "sharePath": "agfileshare"
+    "sharePath": "agfileshare",
     "numberOfInstances": 2, //you can't just simple increase this to 4 to create a 4 node cluster
     "DomainName": "[concat(parameters('EnvironmentPrefix'),'.local')]"
     
