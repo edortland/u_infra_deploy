@@ -357,7 +357,7 @@
             "value": "10.2.1.10"
           },
           "AvailabilitySetName": {
-            "value": "SQLcluster"
+            "value": "sqlcluster"
           },
           "AvailabilitySetFaultdomaincount": {
             "value": 3

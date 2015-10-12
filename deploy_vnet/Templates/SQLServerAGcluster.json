@@ -152,7 +152,7 @@
     "sqlImageSKU": "Enterprise",
 
     //VM sizes
-    "sqlVMSize": "Standard_DS3",
+    "sqlVMSize": "Standard_DS2",
     "witnessVMSize": "Standard_DS1",
     "SQLDataDiskSize": 100,
     "SQLLogDiskSize": 50,
