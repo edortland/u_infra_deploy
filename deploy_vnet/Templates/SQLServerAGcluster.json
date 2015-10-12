@@ -141,7 +141,7 @@
     //VM naming
     "VMNamePrefix": "[concat(parameters('EnvironmentPrefix'),parameters('VMfunctionNameShortcut'),'0')]",
     "NicNamePrefix": "[concat(variables('VMNamePrefix'),'0')]",
-    "VMNameWitness": "[concat(parameters('EnvironmentPrefix'),parameters('VMfunctionNameShortcut'),'01')]",
+    "VMNameWitness": "[concat(parameters('EnvironmentPrefix'),parameters('VMfunctionNameShortcut'),'03')]",
 
     //OS imaging info
     "windowsImagePublisher": "MicrosoftWindowsServer",
