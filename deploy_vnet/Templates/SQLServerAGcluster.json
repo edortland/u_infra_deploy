@@ -169,8 +169,9 @@
     //AG and clusternaming
     "sqlAOEPName": "sqlaoe01",
     "sqlAOAGName": "sqlaoag01",
+    "sqlAOListenerName": "sqlaoag-list",
     "clusterName": "sqlcl01",
-
+    "sharePath": "agfileshare"
     "numberOfInstances": 2, //you can't just simple increase this to 4 to create a 4 node cluster
     "DomainName": "[concat(parameters('EnvironmentPrefix'),'.local')]"
     
@@ -485,7 +486,7 @@
           "configurationFunction": "[variables('fswConfigurationFunction')]",
           "properties": {
             "domainName": "[variables('domainName')]",
-            "sharePath": "\test",
+            "sharePath": "variables('sharePath')",
             "adminCreds": {
               "userName": "[parameters('adminUserName')]",
               "password": "PrivateSettingsRef:adminPassword"
@@ -562,7 +563,7 @@
           "properties": {
             "domainName": "[variables('domainName')]",
             "clusterName": "[variables('clusterName')]",
-            "sharePath": "[concat('\\'',variables('VMnameWitness'),'\test')]",
+            "sharePath": "[concat('\\', variables('VMnameWitness'),'\',variables('sharePath'))]",
             "nodes": [
               "[concat(variables('VMNamePrefix'),'1')]",
               "[concat(variables('VMNamePrefix'),'2')]"
