@@ -474,7 +474,6 @@
         "displayName": "Create fileshare for witness"
       },
       "dependsOn": [
-        "Microsoft.Resources/deployments/UpdateSQLWNic",
         "[concat('Microsoft.Compute/virtualMachines/', variables('VMNameWitness'))]"
       ],
       "properties": {
