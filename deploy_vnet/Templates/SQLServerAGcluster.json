@@ -149,10 +149,10 @@
     "windowsImageSKU": "2012-R2-Datacenter",
     "sqlImagePublisher": "MicrosoftSQLServer",
     "sqlImageOffer": "SQL2014-WS2012R2",
-    "sqlImageSKU": "Enterprise",
+    "sqlImageSKU": "Standard",
 
     //VM sizes
-    "sqlVMSize": "Standard_DS2",
+    "sqlVMSize": "Standard_G1",
     "witnessVMSize": "Standard_DS1",
     "SQLDataDiskSize": 100,
     "SQLLogDiskSize": 50,
