@@ -38,6 +38,7 @@
     <None Include="Scripts\CreateADPDC.ps1.zip" />
     <None Include="Scripts\CreateFailoverCluster.ps1.zip" />
     <None Include="Scripts\CreateFileShareWitness.ps1.zip" />
+    <None Include="Scripts\deployWebsite.ps1" />
     <None Include="Scripts\JoinDomain.ps1.zip" />
     <None Include="Scripts\PrepareAlwaysOnSqlServer.ps1.zip" />
     <None Include="Templates\domaincontrollers.json" />
