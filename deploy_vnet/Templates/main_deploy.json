@@ -278,7 +278,7 @@
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
           },
           "dnsNameforWebFrontLBIP": {
-            "value": "testurl"
+            "value": "[concat(parameters('EnvironmentPrefix'),'web')]"
           },
           "subNet": {
             "value": "[variables('WebserversSubnet')]"
