@@ -6,6 +6,7 @@
     "EnvironmentPrefix": {
       "type": "string",
       "allowedValues": [
+        "usgm",
         "usgt",
         "usgx",
         "usgp",
@@ -83,14 +84,6 @@
         "description": "The location of resources such as  and DSC modules that the script is dependent"
       }
     }
-
-
-
-
-
-
-
-
   },
   "variables": {
     "WebAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_frontwebservers')]",
@@ -102,7 +95,7 @@
      
 
     "WebVMNamePrefix": "[concat(parameters('EnvironmentPrefix'),'web0')]",
-    "WebNicNamePrefix": "[concat(variables('WebVMNamePrefix'),'0')]",
+    "WebNicNamePrefix": "[concat(variables('WebVMNamePrefix'))]",
     "vmSize": "standard_d1",
 
     "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'webfront_pub')]",
