@@ -87,7 +87,7 @@
   },
   "variables": {
     "WebAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_frontwebservers')]",
-    "publicIPAddressType": "Dynamic",
+    "publicIPAddressType": "Static",
 
     "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
     "VnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('vNETname'))]",
