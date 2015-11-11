@@ -120,18 +120,18 @@
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]"
     },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameforWebFrontLBIP')]"
-        }
-      }
-    },
+    //{
+    //  "apiVersion": "2015-05-01-preview",
+    //  "type": "Microsoft.Network/publicIPAddresses",
+    //  "name": "[variables('publicIPAddressName')]",
+    //  "location": "[resourceGroup().location]",
+    //  "properties": {
+    //    "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+    //    "dnsSettings": {
+    //      "domainNameLabel": "[parameters('dnsNameforWebFrontLBIP')]"
+    //    }
+    //  }
+    //},
 
     {
       "apiVersion": "2015-05-01-preview",
@@ -175,9 +175,9 @@
       "name": "[variables('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-      ],
+      //"dependsOn": [
+      //  "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      //],
       "properties": {
         "frontendIPConfigurations": [
           {
