@@ -98,7 +98,7 @@
     "WebNicNamePrefix": "[concat(variables('WebVMNamePrefix'))]",
     "vmSize": "standard_d1",
 
-    "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'_webfront')]",
+    "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'webfront_pub')]",
     "publicIPAddressID": "[resourceId('USG_Shared','Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "numberOfInstances": 2,
     "lbName": "[concat(parameters('EnvironmentPrefix'),'webfrontend_lb_001')]",
