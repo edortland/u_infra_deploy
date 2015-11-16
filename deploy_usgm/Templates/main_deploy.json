@@ -8,7 +8,8 @@
         "usgt",
         "usgx",
         "usgp",
-        "usgd"
+        "usgd",
+        "usgm"
       ],
       "metadata": {
         "description": "The prefix of the environment you are deploying"
@@ -126,10 +127,10 @@
     "VMStorageTemplateUri": "[concat(parameters('TemplateLocation'),'/VMStorageAccount.json')]",
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
     "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
-    "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/Webservers.json')]",
-    "JobserversTemplateUri": "[concat(parameters('TemplateLocation'),'/jobservers.json')]",
-    "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
-    "JobserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_AppTrusted')]",
+    "admserversTemplateUri": "[concat(parameters('TemplateLocation'),'/admservers.json')]",
+    "jenkensserversTemplateUri": "[concat(parameters('TemplateLocation'),'/jenkinsservers.json')]",
+    "admserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
+    "jenkensserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
     "SqlClusterTemplateUri": "[concat(parameters('TemplateLocation'),'/SQLServerAGcluster.json')]",
     "SQLserverSubnet": "[concat(parameters('EnvironmentPrefix'),'_DataRestricted')]"
 
@@ -253,7 +254,7 @@
       }
     },
     {
-      "name": "Webservers",
+      "name": "admservers",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
@@ -264,7 +265,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('webserversTemplateUri')]",
+          "uri": "[variables('admserversTemplateUri')]",
           "contentVersion": "1.0.0.0"
         },
 
@@ -279,11 +280,11 @@
           "VMDiagStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
           },
-          "dnsNameforWebFrontLBIP": {
-            "value": "[concat(parameters('EnvironmentPrefix'),'web')]"
+          "dnsNameforadmFrontLBIP": {
+            "value": "[concat(parameters('EnvironmentPrefix'),'adm')]"
           },
           "subNet": {
-            "value": "[variables('WebserversSubnet')]"
+            "value": "[variables('admserversSubnet')]"
           },
           "adminUserName": {
             "value": "[parameters('AdminUsername')]"
@@ -310,7 +311,7 @@
 
     ,
     {
-      "name": "jobservers",
+      "name": "jenkinsservers",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
       "dependsOn": [
@@ -321,7 +322,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('jobserversTemplateUri')]",
+          "uri": "[variables('jenkensserversTemplateUri')]",
           "contentVersion": "1.0.0.0"
         },
 
@@ -336,11 +337,11 @@
           "VMDiagStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
           },
-          "dnsNameforJobFrontLBIP": {
-            "value": "[concat(parameters('EnvironmentPrefix'),'job')]"
+          "dnsNameforJenkFrontLBIP": {
+            "value": "[concat(parameters('EnvironmentPrefix'),'jenk')]"
           },
           "subNet": {
-            "value": "[variables('jobserversSubnet')]"
+            "value": "[variables('jenkensserversSubnet')]"
           },
           "adminUserName": {
             "value": "[parameters('AdminUsername')]"

@@ -46,11 +46,9 @@
     <None Include="Templates\main_deploy.parameters.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\SQLServerAGCluster.json" />
-    <None Include="Templates\SQLServerAGcluster_original.json" />
     <None Include="Templates\VMStorageAccount.json" />
-    <None Include="Templates\jobservers.json" />
-    <None Include="Templates\webservers.json" />
+    <None Include="Templates\jenkinsservers.json" />
+    <None Include="Templates\admservers.json" />
     <None Include="Tools\AzCopy.exe" />
     <None Include="Tools\Microsoft.Data.Edm.dll">
       <Visible>False</Visible>

@@ -8,7 +8,8 @@
         "usgt",
         "usgx",
         "usgp",
-        "usgd"
+        "usgd",
+        "usgm"
       ],
       "metadata": {
         "description": "The prefix of the environment you are deploying"
