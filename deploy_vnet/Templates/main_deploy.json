@@ -336,7 +336,7 @@
           "VMDiagStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
           },
-          "dnsNameforWebFrontLBIP": {
+          "dnsNameforJobFrontLBIP": {
             "value": "[concat(parameters('EnvironmentPrefix'),'job')]"
           },
           "subNet": {
