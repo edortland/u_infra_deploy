@@ -1,0 +1,93 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "EnvironmentPrefix": {
+      "type": "string",
+      "allowedValues": [
+        "usgt",
+        "usgx",
+        "usgp",
+        "usgd"
+      ],
+      "metadata": {
+        "description": "The prefix of the environment you are deploying"
+      }
+    },
+    "DNSServerAddresses": {
+      "type": "array",
+      "metadata": {
+        "Description": "The ipaddresses of the DNS servers in the vnet: Typically the pdc and bdc addresses"
+      }
+    }
+  },
+
+  "variables": {
+    "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
+    "addressSpace": "10.0.0.0/8",
+    "snetWebDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
+    "snetWebDMZ_CIDR": "10.0.1.0/24",
+    "snetAppDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_AppDMZ')]",
+    "snetAppDMZ_CIDR": "10.0.2.0/24",
+    "snetAppTrusted_Name": "[concat(parameters('EnvironmentPrefix'),'_AppTrusted')]",
+    "snetAppTrusted_CIDR": "10.1.1.0/24",
+    "snetCoreTrusted_Name": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
+    "snetCoreTrusted_CIDR": "10.1.2.0/24",
+    "snetDataRestricted_Name": "[concat(parameters('EnvironmentPrefix'),'_DataRestricted')]",
+    "snetDataRestricted_CIDR": "10.2.1.0/24"
+  },
+
+  "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('vNETname')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Virtual Network"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressSpace')]"
+          ]
+        },
+        //"dhcpOptions": {
+        //  "dnsServers": "[parameters('DNSServerAddresses')]"
+        //},
+        "subnets": [
+          {
+            "name": "[variables('snetWebDMZ_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetWebDMZ_CIDR')]"
+            }
+          },
+          {
+            "name": "[variables('snetAppDMZ_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetAppDMZ_CIDR')]"
+            }
+          },
+          {
+            "name": "[variables('snetAppTrusted_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetAppTrusted_CIDR')]"
+            }
+          },
+          {
+            "name": "[variables('snetCoreTrusted_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetCoreTrusted_CIDR')]"
+            }
+          },
+          {
+            "name": "[variables('snetDataRestricted_Name')]",
+            "properties": {
+              "addressPrefix": "[variables('snetDataRestricted_CIDR')]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
