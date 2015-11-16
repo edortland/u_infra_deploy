@@ -23,17 +23,17 @@
     //    "description": "Public IP Name"
     //  }
     //},
-    "dnsNameforWebFrontLBIP": {
+    "dnsNameforjobFrontLBIP": {
       "type": "string",
       "metadata": {
-        "description": "DNS for Web front end Load Balancer IP"
+        "description": "DNS for job front end Load Balancer IP"
       }
     },
 
     "subNet": {
       "type": "string",
       "metadata": {
-        "description": "Name of the subnet in which the front end webservers need to be deployed"
+        "description": "Name of the subnet in which the front end jobservers need to be deployed"
       }
     },
     "VMnormalStorageAccountNamePrefix": {
@@ -86,7 +86,7 @@
     }
   },
   "variables": {
-    "WebAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_frontwebservers')]",
+    "jobAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_jobservers')]",
     "publicIPAddressType": "Static",
 
     "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
@@ -94,19 +94,18 @@
     "SubnetRef": "[concat(variables('VnetID'),'/subnets/',parameters('Subnet'))]",
      
 
-    "WebVMNamePrefix": "[concat(parameters('EnvironmentPrefix'),'web0')]",
-    "WebNicNamePrefix": "[concat(variables('WebVMNamePrefix'))]",
+    "jobVMNamePrefix": "[concat(parameters('EnvironmentPrefix'),'job0')]",
+    "jobNicNamePrefix": "[concat(variables('jobVMNamePrefix'))]",
     "vmSize": "standard_d1",
 
-    "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'webfront_pub')]",
-    "publicIPAddressID": "[resourceId('USG_Shared','Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+    "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'jobfront_pub')]",
+    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "numberOfInstances": 2,
-    "lbName": "[concat(parameters('EnvironmentPrefix'),'webfrontend_lb_001')]",
+    "lbName": "[concat(parameters('EnvironmentPrefix'),'job_lb_001')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
     "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/BackendPool1')]",
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-    "lbProbeID2": "[concat(variables('lbID'),'/probes/tcpProbe2')]",
 
     "JoinDomainModulesURL": "[concat(parameters('ScriptLocation'),'/JoinDomain.ps1.zip')]",
     "JoinDomainConfigurationFunction": "Configuration.ps1\\DomainJoin",
@@ -117,27 +116,27 @@
     //Create a availability set
     {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[variables('WebAvailabilitySetName')]",
+      "name": "[variables('jobAvailabilitySetName')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]"
     },
-    //{
-    //  "apiVersion": "2015-05-01-preview",
-    //  "type": "Microsoft.Network/publicIPAddresses",
-    //  "name": "[variables('publicIPAddressName')]",
-    //  "location": "[resourceGroup().location]",
-    //  "properties": {
-    //    "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-    //    "dnsSettings": {
-    //      "domainNameLabel": "[parameters('dnsNameforWebFrontLBIP')]"
-    //    }
-    //  }
-    //},
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsNameforjobFrontLBIP')]"
+        }
+      }
+    },
 
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('webNicNameprefix'), copyindex(1),'nic001')]",
+      "name": "[concat(variables('jobNicNameprefix'), copyindex(1),'nic001')]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "nicLoop",
@@ -176,9 +175,9 @@
       "name": "[variables('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[resourceGroup().location]",
-      //"dependsOn": [
-      //  "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-      //],
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      ],
       "properties": {
         "frontendIPConfigurations": [
           {
@@ -222,44 +221,7 @@
           }
         ],
         "loadBalancingRules": [
-          {
-            "name": "LBRule",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "backendAddressPool": {
-                "id": "[variables('lbPoolID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 80,
-              "backendPort": 80,
-              "enableFloatingIP": false,
-              "idleTimeoutInMinutes": 5,
-              "probe": {
-                "id": "[variables('lbProbeID')]"
-              }
-            }
-          },
-          {
-            "name": "LBRule2",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "backendAddressPool": {
-                "id": "[variables('lbPoolID')]"
-              },
-              "protocol": "tcp",
-              "frontendPort": 443,
-              "backendPort": 443,
-              "enableFloatingIP": false,
-              "idleTimeoutInMinutes": 5,
-              "probe": {
-                "id": "[variables('lbProbeID2')]"
-              }
-            }
-          }
+         
         ],
         "probes": [
           {
@@ -270,15 +232,6 @@
               "intervalInSeconds": "5",
               "numberOfProbes": "2"
             }
-          },
-          {
-            "name": "tcpProbe2",
-            "properties": {
-              "protocol": "tcp",
-              "port": 443,
-              "intervalInSeconds": "5",
-              "numberOfProbes": "2"
-            }
           }
         ]
       }
@@ -286,25 +239,25 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('webvmNamePrefix'), copyindex(1))]",
+      "name": "[concat(variables('jobvmNamePrefix'), copyindex(1))]",
       "copy": {
         "name": "virtualMachineLoop",
         "count": "[variables('numberOfInstances')]"
       },
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('webnicNamePrefix'), copyindex(1),'nic001')]",
-        "[concat('Microsoft.Compute/availabilitySets/', variables('WebAvailabilitySetName'))]"
+        "[concat('Microsoft.Network/networkInterfaces/', variables('jobnicNamePrefix'), copyindex(1),'nic001')]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('jobAvailabilitySetName'))]"
       ],
       "properties": {
         "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('WebAvailabilitySetName'))]"
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('jobAvailabilitySetName'))]"
         },
         "hardwareProfile": {
           "vmSize": "[variables('vmSize')]"
         },
         "osProfile": {
-          "computername": "[concat(variables('WebVMNamePrefix'), copyIndex(1))]",
+          "computername": "[concat(variables('jobVMNamePrefix'), copyIndex(1))]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
@@ -318,7 +271,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('VMnormalStorageAccountNamePrefix'),copyindex(1),'.blob.core.windows.net/',variables('WebVMNamePrefix'),copyIndex(1),'/',variables('WebVMNamePrefix'),copyIndex(1),'_osdisk.vhd')]"
+              "uri": "[concat('http://',parameters('VMnormalStorageAccountNamePrefix'),copyindex(1),'.blob.core.windows.net/',variables('jobVMNamePrefix'),copyIndex(1),'/',variables('jobVMNamePrefix'),copyIndex(1),'_osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -327,7 +280,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('WebnicNamePrefix'),copyindex(1),'nic001'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('jobnicNamePrefix'),copyindex(1),'nic001'))]"
             }
           ]
         },
@@ -341,7 +294,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('webvmNamePrefix'), copyindex(1),'/DomainJoin')]",
+      "name": "[concat(variables('jobvmNamePrefix'), copyindex(1),'/DomainJoin')]",
       "apiVersion": "2015-05-01-preview",
       "copy": {
         "name": "JoinDomainLoop",
@@ -349,7 +302,7 @@
       },
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[concat(variables('webvmNamePrefix'), copyindex(1))]"
+        "[concat(variables('jobvmNamePrefix'), copyindex(1))]"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",

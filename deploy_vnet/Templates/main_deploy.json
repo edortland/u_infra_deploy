@@ -127,7 +127,9 @@
     "DomainControllersTemplateUri": "[concat(parameters('TemplateLocation'),'/domaincontrollers.json')]",
     "DomainControllersSubnet": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
     "WebserversTemplateUri": "[concat(parameters('TemplateLocation'),'/Webservers.json')]",
+    "JobserversTemplateUri": "[concat(parameters('TemplateLocation'),'/jobservers.json')]",
     "WebserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
+    "JobserversSubnet": "[concat(parameters('EnvironmentPrefix'),'_AppTrusted')]",
     "SqlClusterTemplateUri": "[concat(parameters('TemplateLocation'),'/SQLServerAGcluster.json')]",
     "SQLserverSubnet": "[concat(parameters('EnvironmentPrefix'),'_DataRestricted')]"
 
@@ -282,6 +284,63 @@
           },
           "subNet": {
             "value": "[variables('WebserversSubnet')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('AdminUsername')]"
+          },
+          "adminPassword": {
+            "value": "1234@#$%abcd"
+          },
+          "imagePublisher": {
+            "value": "[parameters('imagePublisher')]"
+          },
+          "imageOffer": {
+            "value": "[parameters('imageOffer')]"
+          },
+          "imageSKU": {
+            "value": "[parameters('imageSKU')]"
+          },
+          "ScriptLocation": {
+            "value": "[parameters('ScriptLocation')]"
+          }
+        }
+      }
+    }
+
+
+    ,
+    {
+      "name": "jobservers",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "VMStorage",
+        "VNet",
+        "DomainControllers"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('jobserversTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+
+        "parameters": {
+          "EnvironmentPrefix": {
+            "value": "[parameters('EnvironmentPrefix')]"
+          },
+
+          "VMnormalStorageAccountNamePrefix": {
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
+          },
+          "VMDiagStorageAccountNamePrefix": {
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMDiagStorageAccountNameSuffix'))]"
+          },
+          "dnsNameforWebFrontLBIP": {
+            "value": "[concat(parameters('EnvironmentPrefix'),'job')]"
+          },
+          "subNet": {
+            "value": "[variables('jobserversSubnet')]"
           },
           "adminUserName": {
             "value": "[parameters('AdminUsername')]"
