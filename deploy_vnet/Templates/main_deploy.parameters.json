@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "EnvironmentPrefix": {
-      "value": "usgd"
+      "value": "usga"
     },
     "imagePublisher": {
       "value": "MicrosoftWindowsServer"
