@@ -6,7 +6,7 @@
       "type": "string",
       "allowedValues": [
         "usgt",
-        "usgx",
+        "usga",
         "usgp",
         "usgd"
       ],
@@ -121,8 +121,8 @@
     "dcAvailabilitySetName": "[concat(parameters('EnvironmentPrefix'),'_as_domaincontrollers')]",
     "dcPDCNicName": "[concat(variables('dcPDCVMName'),'_nic001')]",
     "dcBDCNicName": "[concat(variables('dcBDCVMName'),'_nic001')]",
-    "dcPDCNicIPAddress": "10.21.2.11",
-    "dcBDCNicIPAddress": "10.21.2.12",
+    "dcPDCNicIPAddress": "10.31.2.11",
+    "dcBDCNicIPAddress": "10.31.2.12",
     "dcPDCDatadisk": "dcPDCDatadisk1",
     "dcBDCDatadisk": "dcBDCDatadisk1",
     "vmSize": "standard_d1",

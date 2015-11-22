@@ -24,7 +24,7 @@
       "value": "https://raw.githubusercontent.com/edortland/u_infra_deploy/master/deploy_vnet/Scripts"
     },
     "DNSServerAddresses": {
-      "value": [ "10.21.2.11", "10.21.2.12" ]
+      "value": [ "10.31.2.11", "10.31.2.12" ]
     },
     "AdminUsername": {
       "value": "soladmin"
