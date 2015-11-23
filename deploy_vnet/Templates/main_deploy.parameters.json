@@ -5,6 +5,9 @@
     "EnvironmentPrefix": {
       "value": "usga"
     },
+  "SharedResourceGroup": {
+      "value": "USG_shared_N_EU"
+    },
     "imagePublisher": {
       "value": "MicrosoftWindowsServer"
     },

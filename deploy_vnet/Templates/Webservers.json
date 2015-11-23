@@ -16,6 +16,16 @@
         "description": "The prefix of the environment you are deploying"
       }
     },
+     "SharedResourceGroup": {
+      "type": "string",
+      "allowedValues": [
+        "USG_shared_N_EU",
+        "USG_shared_W_EU"
+      ],
+      "metadata": {
+        "description": "The resource group containing shared resources like public static IP addresses"
+      }
+    },
     //"publicIPAddressName": {
     //  "type": "string",
     //  "defaultValue": "myPublicIP",
@@ -99,7 +109,7 @@
     "vmSize": "standard_d1",
 
     "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'webfront_pub')]",
-    "publicIPAddressID": "[resourceId('USG_Shared','Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+    "publicIPAddressID": "[resourceId(parameters('SharedResourceGroup'),'Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "numberOfInstances": 2,
     "lbName": "[concat(parameters('EnvironmentPrefix'),'webfrontend_lb_001')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",

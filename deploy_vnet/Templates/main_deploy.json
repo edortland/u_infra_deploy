@@ -14,6 +14,16 @@
         "description": "The prefix of the environment you are deploying"
       }
     },
+    "SharedResourceGroup": {
+      "type": "string",
+      "allowedValues": [
+        "USG_shared_N_EU",
+        "USG_shared_W_EU"
+      ],
+      "metadata": {
+        "description": "The resource group containing shared resources like public static IP addresses"
+      }
+    },
     "TemplateLocation": {
       "type": "string",
       "metadata": {
@@ -195,7 +205,7 @@
           }
         }
       }
-    }//test
+    } //test
     ,
     {
       "name": "DomainControllers",
@@ -217,7 +227,7 @@
           },
 
           "VMNormalStorageAccountNamePrefix": {
-           "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
+            "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
           "subNet": {
             "value": "[variables('DomainControllersSubnet')]"
@@ -273,6 +283,10 @@
             "value": "[parameters('EnvironmentPrefix')]"
           },
 
+          "SharedResourceGroup": {
+            "value": "[parameters('SharedResourceGroup')]"
+           
+          },
           "VMnormalStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
@@ -305,10 +319,7 @@
           }
         }
       }
-    }
-
-
-    ,
+    },
     {
       "name": "jobservers",
       "type": "Microsoft.Resources/deployments",
@@ -329,7 +340,6 @@
           "EnvironmentPrefix": {
             "value": "[parameters('EnvironmentPrefix')]"
           },
-
           "VMnormalStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
@@ -364,7 +374,7 @@
       }
     }
     //,
-    
+
     //{
     //  "name": "SQLCluster",
     //  "type": "Microsoft.Resources/deployments",
