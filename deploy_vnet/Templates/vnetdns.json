@@ -26,15 +26,15 @@
     "vNETname": "[concat(parameters('EnvironmentPrefix'),'_',resourceGroup().location,'_001')]",
     "addressSpace": "10.0.0.0/8",
     "snetWebDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_WebDMZ')]",
-    "snetWebDMZ_CIDR": "10.30.1.0/24",
+    "snetWebDMZ_CIDR": "10.40.1.0/24",
     "snetAppDMZ_Name": "[concat(parameters('EnvironmentPrefix'),'_AppDMZ')]",
-    "snetAppDMZ_CIDR": "10.30.2.0/24",
+    "snetAppDMZ_CIDR": "10.40.2.0/24",
     "snetAppTrusted_Name": "[concat(parameters('EnvironmentPrefix'),'_AppTrusted')]",
-    "snetAppTrusted_CIDR": "10.31.1.0/24",
+    "snetAppTrusted_CIDR": "10.41.1.0/24",
     "snetCoreTrusted_Name": "[concat(parameters('EnvironmentPrefix'),'_CoreTrusted')]",
-    "snetCoreTrusted_CIDR": "10.31.2.0/24",
+    "snetCoreTrusted_CIDR": "10.41.2.0/24",
     "snetDataRestricted_Name": "[concat(parameters('EnvironmentPrefix'),'_DataRestricted')]",
-    "snetDataRestricted_CIDR": "10.32.1.0/24"
+    "snetDataRestricted_CIDR": "10.42.1.0/24"
   },
 
   "resources": [
