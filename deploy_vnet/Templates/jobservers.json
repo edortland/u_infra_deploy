@@ -16,6 +16,16 @@
         "description": "The prefix of the environment you are deploying"
       }
     },
+    "SharedResourceGroup": {
+      "type": "string",
+      "allowedValues": [
+        "USG_shared_N_EU",
+        "USG_shared_W_EU"
+      ],
+      "metadata": {
+        "description": "The resource group containing shared resources like public static IP addresses"
+      }
+    },
     //"publicIPAddressName": {
     //  "type": "string",
     //  "defaultValue": "myPublicIP",
@@ -99,7 +109,8 @@
     "vmSize": "standard_d1",
 
     "publicIPAddressName": "[concat(parameters('EnvironmentPrefix'),'jobfront_pub')]",
-    "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+    "publicIPAddressID": "[resourceId(parameters('SharedResourceGroup'),'Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+    //"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "numberOfInstances": 2,
     "lbName": "[concat(parameters('EnvironmentPrefix'),'job_lb_001')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('lbName'))]",
@@ -120,18 +131,18 @@
       "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]"
     },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameforjobFrontLBIP')]"
-        }
-      }
-    },
+    //{
+    //  "apiVersion": "2015-05-01-preview",
+    //  "type": "Microsoft.Network/publicIPAddresses",
+    //  "name": "[variables('publicIPAddressName')]",
+    //  "location": "[resourceGroup().location]",
+    //  "properties": {
+    //    "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+    //    "dnsSettings": {
+    //      "domainNameLabel": "[parameters('dnsNameforjobFrontLBIP')]"
+    //    }
+    //  }
+    //},
 
     {
       "apiVersion": "2015-05-01-preview",
@@ -175,9 +186,9 @@
       "name": "[variables('lbName')]",
       "type": "Microsoft.Network/loadBalancers",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-      ],
+      //"dependsOn": [
+      //  "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      //],
       "properties": {
         "frontendIPConfigurations": [
           {
