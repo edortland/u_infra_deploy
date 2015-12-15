@@ -340,10 +340,7 @@
           "EnvironmentPrefix": {
             "value": "[parameters('EnvironmentPrefix')]"
           },
-          "SharedResourceGroup": {
-            "value": "[parameters('SharedResourceGroup')]"
-           
-          },
+          
           "VMnormalStorageAccountNamePrefix": {
             "value": "[concat(parameters('EnvironmentPrefix'),resourceGroup().location,parameters('VMnormalStorageAccountNameSuffix'))]"
           },
