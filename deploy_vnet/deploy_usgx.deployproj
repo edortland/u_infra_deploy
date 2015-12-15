@@ -42,9 +42,8 @@
     <None Include="Scripts\JoinDomain.ps1.zip" />
     <None Include="Scripts\PrepareAlwaysOnSqlServer.ps1.zip" />
     <None Include="Templates\domaincontrollers.json" />
-    <None Include="Templates\main_deploy - Copy.parameters.json" />
-    <None Include="Templates\main_deploy.json" />
     <None Include="Templates\main_deploy.parameters.json" />
+    <None Include="Templates\main_deploy.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Templates\SQLServerAGCluster.json" />
