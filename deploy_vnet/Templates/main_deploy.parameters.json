@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "EnvironmentPrefix": {
-      "value": "usgp"
+      "value": "usga"
     },
   "SharedResourceGroup": {
-      "value": "USG_shared_W_EU"
+      "value": "USG_shared_N_EU"
     },
     "imagePublisher": {
       "value": "MicrosoftWindowsServer"
